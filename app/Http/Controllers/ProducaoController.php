@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Producao;
 use Illuminate\Http\Request;
 
 class ProducaoController extends Controller
@@ -12,7 +13,9 @@ class ProducaoController extends Controller
      */
     public function index()
     {
-        //
+        $producao = Producao::where('data', 'like', date("Y-m-d") . '%')->get();
+
+        return view('producao.index')->with('producao', $producao);
     }
 
     /**

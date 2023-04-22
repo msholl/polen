@@ -14,11 +14,13 @@ return new class extends Migration {
             $table->id();
             $table->string('nome', 128);
             $table->string('endereco', 128)->nullable();
-            $table->integer('numero')->nullable();
+            $table->string('numero')->nullable();
             $table->string('bairro', 128);
+            $table->string('complemento', 128)->nullable();
             $table->integer('ordem')->nullable();
             $table->boolean('entregue')->default(false);
-            $table->date('data_entrega')->nullable();
+            $table->date('data')->nullable();
+            $table->dateTime('data_entrega')->nullable();
             $table->string('entregador')->nullable();
             $table->timestamps();
         });

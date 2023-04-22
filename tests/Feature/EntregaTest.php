@@ -1,7 +1,14 @@
 <?php
 
-test('example', function () {
-    $response = $this->get('/');
+use function Pest\Livewire\livewire;
 
-    $response->assertStatus(200);
+todo('should be able to set Entrega as Entregue');
+
+it('sould be able to see all Entregas', function (
+) {
+
 });
+
+todo('should be able to see Entrega details');
+
+todo('should be able to add new Entrega');

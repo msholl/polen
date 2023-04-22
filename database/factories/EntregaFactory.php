@@ -20,7 +20,7 @@ class EntregaFactory extends Factory
         return [
             'nome' => $this->faker->company,
             'bairro' => $this->faker->city,
-            'data_entrega' => $date->format('Y-m-d'),
+            'data' => $date->format('Y-m-d'),
         ];
     }
 }

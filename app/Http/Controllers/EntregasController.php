@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Entrega;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EntregasController extends Controller
 {
@@ -12,7 +14,9 @@ class EntregasController extends Controller
      */
     public function index()
     {
-        //
+        $entregas = Entrega::where('data_entrega', 'like', date("Y-m-d") . '%')->orderby('ordem')->get();
+
+        return view('entregas.index')->with('entregas', $entregas);
     }
 
     /**
@@ -50,9 +54,25 @@ class EntregasController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Entrega $entrega)
     {
-        //
+//        dd($request);
+        $entrega = Entrega::find($request->id);
+
+        if (isset($entrega)) {
+            if ($request->entregue == 1) {
+                $entrega->entregue = 1;
+                $entrega->data_entrega = date('Y-m-d H:i:s');
+                $entrega->entregador = Auth::user()->name;
+            } else {
+                $entrega->entregue = 0;
+                $entrega->data_entrega = null;
+                $entrega->entregador = null;
+            }
+            $entrega->save();
+        }
+
+        return to_route('entregas.index');
     }
 
     /**

@@ -3,7 +3,12 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Entrega;
+use App\Models\Producao;
+use Database\Factories\EntregaFactory;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,11 +17,52 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
         // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        \App\Models\User::factory()->create([
+            'name' => 'Matheus',
+            'email' => 'm.sholl@hotmail.com',
+            'password' => bcrypt('mat931216'),
+        ]);
+
+        \App\Models\User::factory()->create([
+            'name' => 'Entregador',
+            'email' => 'entrega@polen.com.br',
+            'password' => bcrypt('mat931216'),
+        ]);
+
+        \App\Models\User::factory()->create([
+            'name' => 'Producao',
+            'email' => 'producao@polen.com.br',
+            'password' => bcrypt('mat931216'),
+        ]);
+
+        // create permissions
+        Permission::create(['name' => 'entregar']);
+        Permission::create(['name' => 'produzir']);
+
+        // create roles and assign created permissions
+        $role = Role::create(['name' => 'entregador']);
+        $role->givePermissionTo('entregar');
+
+        $role = Role::create(['name' => 'producao']);
+        $role->givePermissionTo('produzir');
+
+        $role = Role::create(['name' => 'super-admin']);
+        $role->givePermissionTo(Permission::all());
+
+        Entrega::factory(16)->create();
+
+        Producao::factory(10)->create();
+
+        $user = \App\Models\User::find(1);
+        $user->assignRole('super-admin');
+
+        $user = \App\Models\User::find(2);
+        $user->assignRole('entregador');
+
+        $user = \App\Models\User::find(3);
+        $user->assignRole('producao');
     }
 }

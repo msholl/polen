@@ -1,10 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Entregas') }}
+            {{ __('Produção') }}
         </h2>
     </x-slot>
 
-    <livewire:entrega.show/>
+    <livewire:producao.show/>
 
 </x-app-layout>
