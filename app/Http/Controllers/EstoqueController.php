@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Embalagem;
+use App\Models\Estoque;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EstoqueController extends Controller
 {
@@ -12,7 +15,14 @@ class EstoqueController extends Controller
      */
     public function index()
     {
-        //
+
+//        $estoque = Estoque::all();
+        $estoque = DB::table('estoque')
+            ->join('embalagem', 'estoque.embalagem_id', '=', 'embalagem.id')
+            ->select('estoque.*', 'embalagem.descricao as embalagem')
+            ->get();
+
+        return view('estoque.index')->with('estoque', $estoque);
     }
 
     /**
@@ -50,9 +60,18 @@ class EstoqueController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Estoque $estoque)
     {
-        //
+//        dd($request);
+        $estoque = Estoque::find($request->id);
+        if ($request->operacao == '+') {
+            $estoque->quantidade += $request->quantidadeOperacao;
+        } else {
+            $estoque->quantidade -= $request->quantidadeOperacao;
+        }
+//        $estoque->quantidade = $request->quantidade;
+        $estoque->save();
+        return redirect()->route('estoque.index');
     }
 
     /**

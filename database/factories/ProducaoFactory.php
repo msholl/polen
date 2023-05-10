@@ -16,7 +16,7 @@ class ProducaoFactory extends Factory
      */
     public function definition(): array
     {
-        $date = $this->faker->dateTimeBetween('-2 days', '+2 days', 'America/Sao_Paulo');
+        $date = $this->faker->dateTimeBetween('-1 days', '+1 days', 'America/Sao_Paulo');
         return [
             'sabor' => $this->faker->company,
             'quantidade' => $this->faker->numberBetween(1, 100),

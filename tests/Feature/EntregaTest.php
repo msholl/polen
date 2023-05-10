@@ -4,10 +4,7 @@ use function Pest\Livewire\livewire;
 
 todo('should be able to set Entrega as Entregue');
 
-it('sould be able to see all Entregas', function (
-) {
-
-});
+todo('sould be able to see all Entregas');
 
 todo('should be able to see Entrega details');
 

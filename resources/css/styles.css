@@ -6,6 +6,23 @@
     color: #000000;
 }
 
+.submenu {
+    background-color: #edc874 !important;
+}
+
+
+.arrow::after {
+    content: "";
+    background-color: #f3f4f6;
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    rotate: 45deg;
+    right: -7px;
+    margin-top: 4px;
+
+}
+
 .tabela-entrega {
     color: #1c2236;
     width: 98%;
@@ -73,20 +90,22 @@
     /*.table-line{*/
     /*    text-align: center;*/
     /*}*/
-    .table-line td {
-        text-align: center;
-        vertical-align: center;
-    }
-
-    .table-line td:last-child {
-        width: 30px;
-    }
-
+    /*.table-line td {*/
+    /*    text-align: center;*/
+    /*    vertical-align: center;*/
+    /*}*/
+    /*.table-line td:last-child {*/
+    /*    width: 30px;*/
+    /*}*/
     .filter-bar {
         flex-direction: column;
     }
 
     #form-filter {
         margin-top: 0.8em;
+    }
+
+    .arrow::after {
+        display: none;
     }
 }

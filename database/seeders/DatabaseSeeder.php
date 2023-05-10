@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Embalagem;
 use App\Models\Entrega;
+use App\Models\Estoque;
 use App\Models\Producao;
 use Database\Factories\EntregaFactory;
 use Illuminate\Database\Seeder;
@@ -38,9 +40,15 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('mat931216'),
         ]);
 
+        // crianco embalagens
+        Embalagem::factory()->create(['descricao' => 'Pote 2L']);
+        Embalagem::factory()->create(['descricao' => 'Pote 5L']);
+        Embalagem::factory()->create(['descricao' => 'Caixa 5L']);
+
         // create permissions
         Permission::create(['name' => 'entregar']);
         Permission::create(['name' => 'produzir']);
+        Permission::create(['name' => 'admin']);
 
         // create roles and assign created permissions
         $role = Role::create(['name' => 'entregador']);
@@ -52,9 +60,11 @@ class DatabaseSeeder extends Seeder
         $role = Role::create(['name' => 'super-admin']);
         $role->givePermissionTo(Permission::all());
 
-        Entrega::factory(16)->create();
+        Entrega::factory(22)->create();
 
         Producao::factory(10)->create();
+
+        Estoque::factory(12)->create();
 
         $user = \App\Models\User::find(1);
         $user->assignRole('super-admin');
@@ -64,5 +74,7 @@ class DatabaseSeeder extends Seeder
 
         $user = \App\Models\User::find(3);
         $user->assignRole('producao');
+
+
     }
 }

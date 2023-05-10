@@ -23,7 +23,8 @@ class ProducaoController extends Controller
      */
     public function create()
     {
-        //
+
+        return view('producao.create');
     }
 
     /**
@@ -31,7 +32,13 @@ class ProducaoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $producao = new Producao();
+        $producao->sabor = $request->sabor;
+        $producao->data = $request->data;
+        $producao->quantidade = $request->quantidade;
+        $producao->save();
+
+        return to_route('producao.index');
     }
 
     /**
@@ -45,24 +52,35 @@ class ProducaoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request)
     {
-        //
+        $producao = Producao::find($request->id);
+        return view('producao.edit')->with('producao', $producao);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Producao $producao)
     {
-        //
+        $producao = Producao::find($request->id);
+//        $producao->sabor = $request->sabor;
+//        $producao->data = $request->data;
+//        $producao->quantidade = $request->quantidade;
+        $producao->fill($request->all());
+        $producao->save();
+
+        return to_route('producao.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $producao = Producao::find($request->id);
+        $producao->delete();
+
+        return to_route('producao.index');
     }
 }

@@ -1,5 +1,5 @@
 <nav
-    class="m-0 p-0 lg:fixed lg:overflow-auto lg:h-full lg:w-60 flex flex-col bg-yellow-500 relative h-auto w-full">
+    class="m-0 p-0 lg:fixed lg:overflow-auto lg:h-full lg:w-60 flex flex-col bg-[#F7C32D] relative h-auto w-full lg:overflow-hidden">
     <div class="flex justify-center">
         <a href="{{route('entregas.index')}}">
             <x-polen-logo class="block w-28 w-28 fill-current text-gray-800"/>
@@ -22,21 +22,33 @@
         class="lg:overflow-visible overflow-hidden sm:transition-all sm:duration-700 sm:max-h-0 sm:peer-checked:max-h-96 sm:mb-12">
         <div class="mb-6 text-center"> Olá, <b>{{ Auth::user()->name }}</b></div>
 
-        <div id="menu-itens">
-            @can('entregar')
-                <x-responsive-nav-link :href="route('entregas.index')" :active="request()->routeIs('entregas.index')">
-                    {{ __('Entregas') }}
-                </x-responsive-nav-link>
 
-            @endcan
+        {{--        <ul id="menu-itens">--}}
+        {{--            <li>--}}
+        {{--                @can('entregar')--}}
+        {{--                    <x-responsive-nav-link :href="route('entregas.index')"--}}
+        {{--                                           :active="request()->routeIs('entregas.index')">--}}
+        {{--                        {{ __('Entregas') }}--}}
+        {{--                    </x-responsive-nav-link>--}}
+        {{--                @endcan--}}
+        {{--            </li>--}}
+        {{--        </ul>--}}
+        <x-nav-link-with-submenu :href="route('entregas.index')" :active="request()->routeIs('entregas.*')"
+                                 :items="[]" :permission="'entregar'">
+            {{ __('Entregas') }}
+        </x-nav-link-with-submenu>
+        @php
+            $menuItems = ['Adicionar produção' => 'producao.create']
+        @endphp
+        <x-nav-link-with-submenu :href="route('producao.index')" :active="request()->routeIs('producao.*')"
+                                 :items="$menuItems" :permission="'produzir'">
+            {{ __('Produção') }}
+        </x-nav-link-with-submenu>
 
-            @can('produzir')
-                <x-responsive-nav-link :href="route('producao.index')" :active="request()->routeIs('producao.index')">
-                    {{ __('Produção') }}
-                </x-responsive-nav-link>
-            @endcan
-        </div>
-
+        <x-nav-link-with-submenu :href="route('estoque.index')" :active="request()->routeIs('estoque.*')"
+                                 :items="[]" :permission="'produzir'">
+            {{ __('Estoque') }}
+        </x-nav-link-with-submenu>
 
         <div class="lg:absolute lg:bottom-4">
             <a href="{{route('profile.edit')}}" class="text-base px-4 py-2"> Perfil </a>
